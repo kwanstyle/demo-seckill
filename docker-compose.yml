@@ -14,3 +14,13 @@ services:
             KAFKA_ADVERTISED_HOST_NAME: 192.168.2.11
             KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
             KAFKA_ADVERTISED_PORT: "9092"
+    redis:
+        image: redis
+        ports:
+            - "6379:6379"
+    mysql:
+        image: mysql
+        ports:
+            - "3306:3006"
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
