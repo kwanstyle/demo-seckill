@@ -1,9 +1,9 @@
 export default (req, res) => {
-    const { redisClient } = req.app.locals;
-    handler(redisClient, res);
+    const { redisClient, kafkaProducer } = req.app.locals;
+    handler(redisClient, kafkaProducer, res);
 };
 
-function handler(redisClient, res) {
+function handler(redisClient, kafkaProducer, res) {
     redisClient.watch("counter");
     redisClient.get("counter", (err, reply) => {
         if (reply === null) {
@@ -22,10 +22,27 @@ function handler(redisClient, res) {
         steps.exec((err, result) => {
             if (result === null) {
                 console.log("Conflict! Retrying...");
-                handler(redisClient, res);
+                handler(redisClient, kafkaProducer, res);
                 return;
             }
-            res.status(200).send(`${result} items left.`);
+
+            const payload = [
+                {
+                    topic: "counter",
+                    messages: `${result} items left.`,
+                    partition: 0,
+                },
+            ];
+            kafkaProducer.send(payload, (err, data) => {
+                if (err) {
+                    console.error("Failed to send the order");
+                    res.status(500).send("Failed to send the order");
+                    return;
+                }
+
+                console.log("Kafka producer: Order sent");
+                res.status(200).send(`${result} items left.`);
+            });
         });
     });
 }
