@@ -1,7 +1,7 @@
 version: "3"
 services:
     zookeeper:
-        image: zookeeper
+        image: wurstmeister/zookeeper
         ports:
             - "2181:2181"
     kafka:
@@ -24,3 +24,13 @@ services:
             - "3306:3006"
         environment:
             MYSQL_ROOT_PASSWORD: "root"
+    api:
+        build: "./api"
+        ports:
+            - "8080:8080"
+        depends_on:
+            - kafka
+            - redis
+            - mysql
+        links:
+            - redis
