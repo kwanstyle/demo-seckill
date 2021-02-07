@@ -11,5 +11,5 @@ app.locals.kafkaProducer = kafkaProducer;
 app.get("/", handler);
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Seckill app listening at http://localhost:${port}`);
 });
