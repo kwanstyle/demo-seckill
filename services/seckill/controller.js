@@ -28,7 +28,7 @@ function handler(redisClient, kafkaProducer, res) {
 
             const payload = [
                 {
-                    topic: "counter",
+                    topic: "order",
                     messages: `${result} items left.`,
                     partition: 0,
                 },

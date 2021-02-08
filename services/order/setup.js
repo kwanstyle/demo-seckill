@@ -2,7 +2,7 @@ import kafka from "kafka-node";
 import mysql from "mysql";
 
 export async function getKafkaConsumer() {
-    const topic = "counter";
+    const topic = "order";
     const kafkaClient = new kafka.KafkaClient({
         kafkaHost: "192.168.2.11:9092",
     });

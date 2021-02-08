@@ -14,7 +14,7 @@ services:
             KAFKA_ADVERTISED_HOST_NAME: 192.168.2.11
             KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
             KAFKA_ADVERTISED_PORT: "9092"
-            KAFKA_CREATE_TOPICS: counter:1:1
+            KAFKA_CREATE_TOPICS: order:1:1
     redis:
         image: redis
         ports:
