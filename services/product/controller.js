@@ -10,7 +10,7 @@ export function createProduct(req, res) {
         data[key] = body[key];
     });
     mysqlClient.query(
-        "INSERT INTO product SET ?",
+        "INSERT INTO products SET ?",
         data,
         (error, results, fields) => {
             if (error) {
@@ -25,7 +25,7 @@ export function getProductById(req, res) {
     const { id } = req.params;
     const { mysqlClient } = req.app.locals;
     mysqlClient.query(
-        `SELECT * FROM product WHERE id = ${id};`,
+        `SELECT * FROM products WHERE id = ${id};`,
         (error, results, fields) => {
             console.log(results);
             console.log(fields);
@@ -41,7 +41,7 @@ export function getProductById(req, res) {
 
 export function getProducts(req, res) {
     const { mysqlClient } = req.app.locals;
-    mysqlClient.query(`SELECT * FROM product;`, (error, results, fields) => {
+    mysqlClient.query(`SELECT * FROM products;`, (error, results, fields) => {
         console.log(results);
         console.log(fields);
         if (error) {

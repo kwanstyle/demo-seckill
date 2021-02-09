@@ -10,7 +10,7 @@ export function createUser(req, res) {
         data[key] = body[key];
     });
     mysqlClient.query(
-        "INSERT INTO account SET ?",
+        "INSERT INTO accounts SET ?",
         data,
         (error, results, fields) => {
             if (error) {
@@ -25,7 +25,7 @@ export function getUserById(req, res) {
     const { id } = req.params;
     const { mysqlClient } = req.app.locals;
     mysqlClient.query(
-        `SELECT * FROM account WHERE id = ${id};`,
+        `SELECT * FROM accounts WHERE id = ${id};`,
         (error, results, fields) => {
             console.log(results);
             console.log(fields);
@@ -41,7 +41,7 @@ export function getUserById(req, res) {
 
 export function getUsers(req, res) {
     const { mysqlClient } = req.app.locals;
-    mysqlClient.query(`SELECT * FROM account;`, (error, results, fields) => {
+    mysqlClient.query(`SELECT * FROM accounts;`, (error, results, fields) => {
         console.log(results);
         console.log(fields);
         if (error) {

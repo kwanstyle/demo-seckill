@@ -5,13 +5,9 @@ const mysqlConn = getMysqlConn();
 
 (async () => {
     kafkaConsumer.on("message", (msg) => {
-        console.log(`Kafka consumer: ${msg}`);
-        const data = {
-            ItemsLeft: 100,
-            Timestamp: new Date(),
-        };
+        const data = JSON.parse(msg.value);
         mysqlConn.query(
-            "INSERT INTO CustomLog SET ?",
+            "INSERT INTO orders SET ?",
             data,
             (error, results, fields) => {
                 if (error) {

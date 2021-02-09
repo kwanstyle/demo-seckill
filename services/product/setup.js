@@ -5,7 +5,7 @@ const mysqlClient = mysql.createConnection({
     port: 3306,
     user: "root",
     password: "root",
-    database: "product",
+    database: "seckill",
 });
 mysqlClient.connect();
 

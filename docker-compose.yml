@@ -36,13 +36,3 @@ services:
         links:
             - redis
             - kafka
-    order:
-        build: "./services/order"
-        ports:
-            - "8081:8081"
-        depends_on:
-            - kafka
-            - mysql
-        links:
-            - kafka
-            - mysql

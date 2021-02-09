@@ -8,7 +8,7 @@ export function createInventory(req, res) {
     const { product, amount } = body;
     const { mysqlClient, redisClient } = req.app.locals;
     mysqlClient.query(
-        `SELECT * FROM product WHERE id=${product};`,
+        `SELECT * FROM products WHERE id=${product};`,
         (error, results, fields) => {
             if (error) {
                 console.log(error);
