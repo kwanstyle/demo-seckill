@@ -1,8 +1,9 @@
-export function createUser(req, res) {
-    const keys = ["name"];
+export function createProduct(req, res) {
+    const keys = ["name", "price", "description"];
     const body = req.body;
     if (!keys.every((item) => item in body)) {
-        res.status(400).send("Missing account info");
+        res.status(400).send("Missing product info");
+        return;
     }
     const { mysqlClient } = req.app.locals;
     const data = {};
@@ -10,27 +11,30 @@ export function createUser(req, res) {
         data[key] = body[key];
     });
     mysqlClient.query(
-        "INSERT INTO accounts SET ?",
+        "INSERT INTO products SET ?",
         data,
         (error, results, fields) => {
             if (error) {
+                console.error(error);
                 res.status(500).send("Registration failed");
+                return;
             }
-            res.status(200).send(`Account registered, id: ${results.insertId}`);
+            res.status(200).send(`Product registered, id: ${results.insertId}`);
         }
     );
 }
 
-export function getUserById(req, res) {
+export function getProductById(req, res) {
     const { id } = req.params;
     const { mysqlClient } = req.app.locals;
     mysqlClient.query(
-        `SELECT * FROM accounts WHERE id = ${id};`,
+        `SELECT * FROM products WHERE id = ${id};`,
         (error, results, fields) => {
             console.log(results);
             console.log(fields);
             if (error) {
                 res.status(500).send("Lookup failed");
+                return;
             }
 
             const statusCode = results.length > 0 ? 200 : 404;
@@ -39,13 +43,14 @@ export function getUserById(req, res) {
     );
 }
 
-export function getUsers(req, res) {
+export function getProducts(req, res) {
     const { mysqlClient } = req.app.locals;
-    mysqlClient.query(`SELECT * FROM accounts;`, (error, results, fields) => {
+    mysqlClient.query(`SELECT * FROM products;`, (error, results, fields) => {
         console.log(results);
         console.log(fields);
         if (error) {
             res.status(500).send("Lookup failed");
+            return;
         }
 
         res.status(200).send(results);

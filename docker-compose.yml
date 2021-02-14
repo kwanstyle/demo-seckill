@@ -26,8 +26,10 @@ services:
             - "3306:3306"
         environment:
             MYSQL_ROOT_PASSWORD: "root"
+        volumes:
+            - ./script/mysql:/docker-entrypoint-initdb.d/
     seckill:
-        build: "./services/seckill"
+        build: "./service/seckill"
         ports:
             - "8080:8080"
         depends_on:
@@ -36,3 +38,29 @@ services:
         links:
             - redis
             - kafka
+    order:
+        build: "./service/order"
+        depends_on:
+            - kafka
+            - mysql
+        links:
+            - kafka
+            - mysql
+    inventory:
+        build: "./service/inventory"
+        ports:
+            - "8081:8080"
+        depends_on:
+            - redis
+            - mysql
+        links:
+            - redis
+            - mysql
+    product:
+        build: "./service/product"
+        ports:
+            - "8082:8080"
+        depends_on:
+            - mysql
+        links:
+            - mysql

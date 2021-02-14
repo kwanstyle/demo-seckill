@@ -1,9 +1,8 @@
-import { getKafkaConsumer, getMysqlConn } from "./setup.js";
-
-const kafkaConsumer = await getKafkaConsumer();
-const mysqlConn = getMysqlConn();
+import { getKafkaConsumer, getMysqlClient } from "./setup.js";
 
 (async () => {
+    const kafkaConsumer = await getKafkaConsumer();
+    const mysqlConn = getMysqlClient();
     kafkaConsumer.on("message", (msg) => {
         const data = JSON.parse(msg.value);
         mysqlConn.query(
@@ -18,5 +17,5 @@ const mysqlConn = getMysqlConn();
         );
     });
 
-    console.log("Service node is running");
+    console.log("Order service is running");
 })();

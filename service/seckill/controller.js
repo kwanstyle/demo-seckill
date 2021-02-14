@@ -3,13 +3,15 @@ export function createSeckill(req, res) {
     const body = req.body;
     if (!keys.every((item) => item in body)) {
         res.status(400).send("Missing seckill info");
+        return;
     } else if (!isPositiveInt(req.body.amount)) {
         res.status(400).send("Invalid amount");
+        return;
     }
 
     const data = {};
     keys.forEach((key) => {
-        data[key] = parseInt(body[key]);
+        data[key] = isPositiveInt(body[key]) ? parseInt(body[key]) : body[key];
     });
     const { redisClient, kafkaProducer } = req.app.locals;
     handler(redisClient, kafkaProducer, data, res);

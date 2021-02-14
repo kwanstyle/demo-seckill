@@ -13,5 +13,5 @@ app.locals.kafkaProducer = kafkaProducer;
 app.post("/", controllers.createSeckill);
 
 app.listen(port, () => {
-    console.log(`Seckill app listening at http://localhost:${port}`);
+    console.log(`Seckill service is listening at http://localhost:${port}`);
 });

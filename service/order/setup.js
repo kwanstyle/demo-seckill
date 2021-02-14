@@ -16,7 +16,9 @@ export async function getKafkaConsumer() {
                 );
             } else {
                 isTopicReady = true;
-                console.log(`Topic metadata: ${JSON.stringify(data)}`);
+                console.log(
+                    `Kafka topic found. Topic metadata: ${JSON.stringify(data)}`
+                );
             }
         });
     }
@@ -37,16 +39,16 @@ export async function getKafkaConsumer() {
     return kafkaConsumer;
 }
 
-export function getMysqlConn() {
-    const mysqlConn = mysql.createConnection({
+export function getMysqlClient() {
+    const mysqlClient = mysql.createPool({
+        connectionLimit: 10,
         host: "192.168.2.11",
         port: 3306,
         user: "root",
         password: "root",
-        database: "seckill",
+        database: "order_db",
     });
-    mysqlConn.connect();
-    return mysqlConn;
+    return mysqlClient;
 }
 
 async function delay(ms) {
