@@ -30,8 +30,6 @@ export function getProductById(req, res) {
     mysqlClient.query(
         `SELECT * FROM products WHERE id = ${id};`,
         (error, results, fields) => {
-            console.log(results);
-            console.log(fields);
             if (error) {
                 res.status(500).send("Lookup failed");
                 return;
@@ -46,9 +44,8 @@ export function getProductById(req, res) {
 export function getProducts(req, res) {
     const { mysqlClient } = req.app.locals;
     mysqlClient.query(`SELECT * FROM products;`, (error, results, fields) => {
-        console.log(results);
-        console.log(fields);
         if (error) {
+            console.error(error);
             res.status(500).send("Lookup failed");
             return;
         }
