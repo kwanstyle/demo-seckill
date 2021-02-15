@@ -5,7 +5,7 @@ export function createProduct(req, res) {
         res.status(400).send("Missing product info");
         return;
     }
-    const { mysqlClient } = req.app.locals;
+    const { mysqlClient, memcachedClient } = req.app.locals;
     const data = {};
     keys.forEach((key) => {
         data[key] = body[key];
@@ -19,26 +19,38 @@ export function createProduct(req, res) {
                 res.status(500).send("Registration failed");
                 return;
             }
-            res.status(200).send(`Product registered, id: ${results.insertId}`);
+
+            memcachedClient.set(results.insertId, data, 60, (err) => {
+                res.status(200).send(
+                    `Product registered, id: ${results.insertId}`
+                );
+            });
         }
     );
 }
 
 export function getProductById(req, res) {
     const { id } = req.params;
-    const { mysqlClient } = req.app.locals;
-    mysqlClient.query(
-        `SELECT * FROM products WHERE id = ${id};`,
-        (error, results, fields) => {
-            if (error) {
-                res.status(500).send("Lookup failed");
-                return;
-            }
-
-            const statusCode = results.length > 0 ? 200 : 404;
-            res.status(statusCode).send(results[0]);
+    const { mysqlClient, memcachedClient } = req.app.locals;
+    memcachedClient.get(id, (err, data) => {
+        if (data) {
+            res.status(200).send(data);
+            return;
         }
-    );
+
+        mysqlClient.query(
+            `SELECT * FROM products WHERE id = ${id};`,
+            (error, results, fields) => {
+                if (error) {
+                    res.status(500).send("Lookup failed");
+                    return;
+                }
+
+                const statusCode = results.length > 0 ? 200 : 404;
+                res.status(statusCode).send(results[0]);
+            }
+        );
+    });
 }
 
 export function getProducts(req, res) {

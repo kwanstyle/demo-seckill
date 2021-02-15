@@ -28,6 +28,10 @@ services:
             MYSQL_ROOT_PASSWORD: "root"
         volumes:
             - ./script/mysql:/docker-entrypoint-initdb.d/
+    memcached:
+        image: memcached
+        ports:
+            - "11211:11211"
     seckill:
         build: "./service/seckill"
         ports:
@@ -49,6 +53,7 @@ services:
         build: "./service/product"
         depends_on:
             - mysql
+            - memcached
     nginx:
         image: nginx
         ports:

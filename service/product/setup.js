@@ -1,6 +1,7 @@
 import mysql from "mysql";
+import Memcached from "memcached";
 
-export default function getMysqlClient() {
+export function getMysqlClient() {
     const mysqlClient = mysql.createPool({
         connectionLimit: 10,
         host: "192.168.2.11",
@@ -10,4 +11,9 @@ export default function getMysqlClient() {
         database: "product_db",
     });
     return mysqlClient;
+}
+
+export function getMemcachedClient() {
+    const memcachedClient = new Memcached("192.168.2.11:11211");
+    return memcachedClient;
 }
