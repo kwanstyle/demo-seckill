@@ -4,7 +4,7 @@ import Memcached from "memcached";
 export function getMysqlClient() {
     const mysqlClient = mysql.createPool({
         connectionLimit: 10,
-        host: "192.168.2.11",
+        host: "mysql",
         port: 3306,
         user: "root",
         password: "root",
@@ -14,6 +14,6 @@ export function getMysqlClient() {
 }
 
 export function getMemcachedClient() {
-    const memcachedClient = new Memcached("192.168.2.11:11211");
+    const memcachedClient = new Memcached("memcached:11211");
     return memcachedClient;
 }

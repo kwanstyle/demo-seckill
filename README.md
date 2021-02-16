@@ -3,22 +3,24 @@
 ## Quick Start
 As prerequisite, Docker is required since the cluster is running on docker-compose.
 
+In .env, update the IP address of the host, as Kafka will need it for advertising.
+
 To start the service, run the following command in the root directory of the repository.
 
 ```
 docker-compose up
 ```
 
-Initialization will complete the creation of database and related tables without sample data.
+Initialization will handle the creation of database and related tables without sample data.
 
-#### To add a sample item
+#### To add a product
 Make a POST request to `localhost:8080/product` with url-encoded fields `name`, `price` and `description`.
 
 #### To add inventory
 Make a POST request to `localhost:8080/inventory` with url-encoded fields `product`(product id, returned from previous step) and `amount`.
 
-#### To start seckill
-Make a POST request to `localhost:8080/seckill` (nginx gateway) or `localhost:8081` (direct) with url-encoded fields `product`(product id), `user` and `amount`.
+#### To trigger the seckill
+Make POST requests to `localhost:8080/seckill` (nginx gateway) or `localhost:8081` (direct) with url-encoded fields `product`(product id), `user` and `amount`.
 
 
 ## Design

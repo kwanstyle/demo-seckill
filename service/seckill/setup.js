@@ -6,10 +6,10 @@ function errorHandler(err) {
 }
 
 const redisClient = redis.createClient({
-    host: "192.168.2.11",
+    host: "redis",
 });
 const kafkaClient = new kafka.KafkaClient({
-    kafkaHost: "192.168.2.11:9092",
+    kafkaHost: "kafka:9092",
 });
 const kafkaProducer = new kafka.Producer(kafkaClient);
 

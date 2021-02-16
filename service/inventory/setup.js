@@ -3,7 +3,7 @@ import redis from "redis";
 
 export function getRedisClient() {
     const redisClient = redis.createClient({
-        host: "192.168.2.11",
+        host: "redis",
     });
     redisClient.on("error", (err) => console.error(err));
     return redisClient;
@@ -12,7 +12,7 @@ export function getRedisClient() {
 export function getMysqlClient() {
     const mysqlClient = mysql.createPool({
         connectionLimit: 10,
-        host: "192.168.2.11",
+        host: "mysql",
         port: 3306,
         user: "root",
         password: "root",
