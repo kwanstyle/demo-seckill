@@ -22,7 +22,7 @@ Make POST requests to `localhost:8080/seckill` (nginx gateway) or `localhost:808
 
 
 ## Design
-TBD
+![Image of Yaktocat](./assets/seckill-design.png)
 
 ## References
 
