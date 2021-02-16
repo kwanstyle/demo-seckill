@@ -21,8 +21,8 @@ Make a POST request to `localhost:8080/inventory` with url-encoded fields `produ
 Make POST requests to `localhost:8080/seckill` (nginx gateway) or `localhost:8081` (direct) with url-encoded fields `product`(product id), `user` and `amount`.
 
 
-## Design
-![Image of Yaktocat](./asset/seckill-design.png)
+## Flow Diagram
+![Design Diagram](./asset/seckill-design.png)
 
 ## References
 
