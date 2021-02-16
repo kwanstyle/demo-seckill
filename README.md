@@ -1,5 +1,3 @@
-# seckill-demo
-
 ## Quick Start
 As prerequisite, Docker is required since the cluster is running on docker-compose.
 
